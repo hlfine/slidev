@@ -1,18 +1,19 @@
+import type { ResolvedSlidevOptions, SlideInfo, SlidePatch, SlidevServerOptions } from '@slidev/types'
+import type { LoadResult } from 'rollup'
 import type { Plugin, ViteDevServer } from 'vite'
 import { notNullish, range } from '@antfu/utils'
-import type { ResolvedSlidevOptions, SlideInfo, SlidePatch, SlidevServerOptions } from '@slidev/types'
 import * as parser from '@slidev/parser/fs'
 import equal from 'fast-deep-equal'
-import type { LoadResult } from 'rollup'
+import YAML from 'yaml'
+import { sharedMd } from '../commands/shared'
+import { createDataUtils } from '../options'
 import { getBodyJson, updateFrontmatterPatch } from '../utils'
 import { templates } from '../virtual'
-import { templateTitleRendererMd } from '../virtual/titles'
-import { templateSlides } from '../virtual/slides'
 import { templateConfigs } from '../virtual/configs'
 import { templateMonacoRunDeps } from '../virtual/monaco-deps'
 import { templateMonacoTypes } from '../virtual/monaco-types'
-import { sharedMd } from '../commands/shared'
-import { createDataUtils } from '../options'
+import { templateSlides } from '../virtual/slides'
+import { templateTitleRendererMd } from '../virtual/titles'
 import { regexSlideFacadeId, regexSlideReqPath, regexSlideSourceId } from './common'
 
 function renderNote(text: string = '') {
@@ -44,7 +45,7 @@ export function createSlidesLoader(
 
   let skipHmr: { filePath: string, fileContent: string } | null = null
 
-  const { data, clientRoot, roots, mode, utils } = options
+  const { data, mode, utils } = options
 
   function getSourceId(index: number, type: 'md' | 'frontmatter') {
     return `${data.slides[index].source.filepath}__slidev_${index + 1}.${type}`
@@ -91,6 +92,18 @@ export function createSlidesLoader(
 
           if (body.content)
             slide.content = slide.source.content = body.content
+          if (body.frontmatterRaw != null) {
+            if (body.frontmatterRaw.trim() === '') {
+              slide.source.frontmatterDoc = slide.source.frontmatterStyle = undefined
+            }
+            else {
+              const parsed = YAML.parseDocument(body.frontmatterRaw)
+              if (parsed.errors.length)
+                console.error('ERROR when saving frontmatter', parsed.errors)
+              else
+                slide.source.frontmatterDoc = parsed
+            }
+          }
           if (body.note)
             slide.note = slide.source.note = body.note
           if (body.frontmatter)
@@ -200,7 +213,7 @@ export function createSlidesLoader(
       }
 
       Object.assign(data, newData)
-      Object.assign(utils, createDataUtils(newData, clientRoot, roots))
+      Object.assign(utils, createDataUtils(options))
 
       if (hmrSlidesIndexes.size > 0)
         moduleIds.add(templateTitleRendererMd.id)

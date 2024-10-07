@@ -178,3 +178,35 @@ You can generate the PDF outline by passing the `--with-toc` option:
 ```bash
 $ slidev export --with-toc
 ```
+
+### Omit Background
+
+When exporting to PNGs, you can remove the default browser background by passing `--omit-background`:
+
+```bash
+$ slidev export --omit-background
+```
+
+The default browser background is the white background visible on all browser windows and is different than other backgrounds applied throughout the application using CSS styling. [See Playwright docs](https://playwright.dev/docs/api/class-page#page-screenshot-option-omit-background). You will then need to apply additional CSS styling to the application to reveal the transparency.
+
+Here is a basic example that covers all backgrounds in the application:
+
+```css
+* {
+  background: transparent !important;
+}
+```
+
+## Troubleshooting
+
+### Broken Emojis
+
+If the PDF or PNG are missing Emojis, you are likely missing required fonts (such as. e.g. [Google's _Noto Emoji_](https://fonts.google.com/noto/specimen/Noto+Emoji)) in your environment.
+
+This can affect e.g. CI/CD-like in-container sort of Linux environments. It can be fixed e.g. like this:
+
+```bash
+$ curl -L --output NotoColorEmoji.ttf https://github.com/googlefonts/noto-emoji/raw/main/fonts/NotoColorEmoji.ttf
+$ sudo mv NotoColorEmoji.ttf /usr/local/share/fonts/
+$ fc-cache -fv
+```

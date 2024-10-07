@@ -20,6 +20,8 @@ drawings:
 transition: slide-left
 # enable MDC Syntax: https://sli.dev/features/mdc
 mdc: true
+# take snapshot for each slide in the overview
+overviewSnapshots: true
 ---
 
 # Welcome to Slidev
@@ -94,7 +96,7 @@ level: 2
 
 # Navigation
 
-Hover on the bottom-left corner to see the navigation's controls panel, [learn more](https://sli.dev/guide/navigation.html)
+Hover on the bottom-left corner to see the navigation's controls panel, [learn more](https://sli.dev/guide/ui#navigation-bar)
 
 ## Keyboard Shortcuts
 
@@ -140,7 +142,7 @@ image: https://cover.sli.dev
 
 # Code
 
-Use code snippets and get the highlighting directly, and even types hover![^1]
+Use code snippets and get the highlighting directly, and even types hover!
 
 ```ts {all|5|7|7-8|10|all} twoslash
 // TwoSlash enables TypeScript hover information
@@ -161,7 +163,8 @@ doubled.value = 2
 <<< @/snippets/external.ts#snippet
 
 <!-- Footer -->
-[^1]: [Learn More](https://sli.dev/guide/line-highlighting)
+
+[Learn more](https://sli.dev/features/line-highlighting)
 
 <!-- Inline style -->
 <style>
@@ -330,8 +333,8 @@ theme: seriph
 
 </div>
 
-Read more about [How to use a theme](https://sli.dev/themes/use.html) and
-check out the [Awesome Themes Gallery](https://sli.dev/themes/gallery.html).
+Read more about [How to use a theme](https://sli.dev/guide/theme-addon#use-theme) and
+check out the [Awesome Themes Gallery](https://sli.dev/resources/theme-gallery).
 
 ---
 
@@ -366,7 +369,7 @@ also allows you to add
 
 <div mt-20 v-click>
 
-[Learn More](https://sli.dev/guide/animations#click-animation)
+[Learn more](https://sli.dev/guide/animations#click-animation)
 
 </div>
 
@@ -446,7 +449,7 @@ const final = {
   :initial="{ x:35, y: 30, opacity: 0}"
   :enter="{ y: 0, opacity: 1, transition: { delay: 3500 } }">
 
-[Learn More](https://sli.dev/guide/animations.html#motion)
+[Learn more](https://sli.dev/guide/animations.html#motion)
 
 </div>
 
@@ -548,7 +551,7 @@ database "MySql" {
 
 </div>
 
-Learn More: [Mermaid Diagrams](https://sli.dev/guide/features/mermaid) and [PlantUML Diagrams](https://sli.dev/guide/features/plantuml)
+Learn more: [Mermaid Diagrams](https://sli.dev/features/mermaid) and [PlantUML Diagrams](https://sli.dev/features/plantuml)
 
 ---
 foo: bar
@@ -633,6 +636,6 @@ class: text-center
 
 # Learn More
 
-[Documentation](https://sli.dev) · [GitHub](https://github.com/slidevjs/slidev) · [Showcases](https://sli.dev/showcases.html)
+[Documentation](https://sli.dev) · [GitHub](https://github.com/slidevjs/slidev) · [Showcases](https://sli.dev/resources/showcases)
 
 <PoweredBySlidev mt-10 />

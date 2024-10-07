@@ -1,13 +1,15 @@
+import type { Component } from 'vue'
 import type { RouteComponent, RouteMeta } from 'vue-router'
 import type YAML from 'yaml'
-import type { Component } from 'vue'
 import type { SlidevConfig } from './config'
 
 export type FrontmatterStyle = 'frontmatter' | 'yaml'
 
 export interface SlideInfoBase {
+  revision: string
   frontmatter: Record<string, any>
   content: string
+  frontmatterRaw?: string
   note?: string
   title?: string
   level?: number
@@ -33,7 +35,6 @@ export interface SourceSlideInfo extends SlideInfoBase {
    * Slides import by this slide.
    */
   imports?: SourceSlideInfo[]
-  frontmatterRaw?: string
   frontmatterDoc?: YAML.Document
   frontmatterStyle?: FrontmatterStyle
 }
@@ -57,7 +58,7 @@ export interface SlideInfo extends SlideInfoBase {
 /**
  * Editable fields for a slide
  */
-export type SlidePatch = Partial<Pick<SlideInfoBase, 'content' | 'note'>> & {
+export type SlidePatch = Partial<Pick<SlideInfoBase, 'content' | 'note' | 'frontmatterRaw'>> & {
   skipHmr?: boolean
   /**
    * The frontmatter patch (only the changed fields)
@@ -72,7 +73,7 @@ export type SlidePatch = Partial<Pick<SlideInfoBase, 'content' | 'note'>> & {
 export interface SlidevThemeMeta {
   defaults?: Partial<SlidevConfig>
   colorSchema?: 'dark' | 'light' | 'both'
-  highlighter?: 'prism' | 'shiki' | 'both'
+  highlighter?: 'shiki'
 }
 
 export type SlidevThemeConfig = Record<string, string | number>

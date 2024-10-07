@@ -1,20 +1,18 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
-
-import TypeIt from 'typeit'
-import Markdown from 'markdown-it'
 import type { SlidevMarkdown } from '@slidev/types'
-
-import { parse } from '@slidev/parser'
-import Cover from '@slidev/theme-default/layouts/cover.vue'
-import Default from '@slidev/client/layouts/default.vue'
 import Center from '@slidev/client/layouts/center.vue'
-import SlideContainer from '@slidev/client/internals/SlideContainer.vue'
-import '@slidev/client/styles/layouts-base.css'
-import '@slidev/theme-default/styles/layouts.css'
-
+import Default from '@slidev/client/layouts/default.vue'
+import { parseSync } from '@slidev/parser'
+import Cover from '@slidev/theme-default/layouts/cover.vue'
+import Markdown from 'markdown-it'
+import TypeIt from 'typeit'
+import { onMounted, ref, watch } from 'vue'
 import DemoEditor from './DemoEditor.vue'
 import DemoSlide from './DemoSlide.vue'
+import SlideContainer from './SlideContainer.vue'
+
+import '@slidev/client/styles/layouts-base.css'
+import '@slidev/theme-default/styles/layouts.css'
 
 const page = ref(0)
 const paused = ref(false)
@@ -38,7 +36,7 @@ watch([code, paused], () => {
   if (paused.value)
     return
   try {
-    info.value = parse(code.value)
+    info.value = parseSync(code.value, '')
   }
   catch {
   }

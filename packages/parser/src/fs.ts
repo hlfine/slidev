@@ -1,8 +1,8 @@
+import type { PreparserExtensionLoader, SlideInfo, SlidevData, SlidevMarkdown, SlidevPreparserExtension, SourceSlideInfo } from '@slidev/types'
 import fs from 'node:fs'
 import { dirname, resolve } from 'node:path'
-import YAML from 'yaml'
 import { slash } from '@antfu/utils'
-import type { PreparserExtensionLoader, SlideInfo, SlidevData, SlidevMarkdown, SlidevPreparserExtension, SourceSlideInfo } from '@slidev/types'
+import YAML from 'yaml'
 import { detectFeatures, parse, parseRangeString, stringify } from './core'
 
 export * from './core'
@@ -103,14 +103,16 @@ export async function load(userRoot: string, filepath: string, loadedSource: Rec
     }
     else {
       slides.push({
-        index: slides.length,
-        importChain,
-        source: slide,
         frontmatter: { ...slide.frontmatter, ...frontmatterOverride },
         content: slide.content,
+        revision: slide.revision,
+        frontmatterRaw: slide.frontmatterRaw,
         note: slide.note,
         title: slide.title,
         level: slide.level,
+        index: slides.length,
+        importChain,
+        source: slide,
       })
     }
   }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, shallowRef } from 'vue'
 import { getHighlighter } from '#slidev/shiki'
+import { ref, shallowRef } from 'vue'
 
 const props = defineProps<{
   placeholder?: string
@@ -28,8 +28,7 @@ getHighlighter().then(h => highlight.value = h)
 <style scoped>
 :deep(code),
 textarea {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    'Liberation Mono', 'Courier New', monospace;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
   font-feature-settings: normal;
   font-variation-settings: normal;
   font-size: 1em;
